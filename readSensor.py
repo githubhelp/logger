@@ -1,24 +1,29 @@
 import serial, re
 
-def getTemp():
-	ser = serial.Serial(port="/dev/ttyUSB1", baudrate=9600, timeout=10)
+def readSensor():
+	ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600, timeout=3)
 	ser.open()
 	value = ser.readline()
-	sensor = re.split(" Sensor: | ", value)[1]
+	try:
+		sensor = re.split(" Sensor: | ", value)[1]
+	except:
+		print "Incorretly formated:", value
+		return readSensor()
+		
 	if sensor == "Temp":
 		id = re.split("Sensor: | ID: | Temp: |C\r\n", value)[2]
 		temp = re.split("Sensor: | ID: | Temp: |C\r\n", value)[3]
 	elif sensor == "Error":
 		print value
 	else:
-		print "Incorretly formated:". value
+		print "Incorretly formated:", value
 
 	ser.close()
 
 	return temp, id
 
 def main():
-	temp, id = getTemp()
+	temp, id = readSensor()
 	print "ID:", id, "Temp: ", temp, "C"
 
 if __name__ == "__main__":
