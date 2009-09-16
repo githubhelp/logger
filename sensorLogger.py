@@ -1,9 +1,10 @@
-import sqlite3, time, datetime
+import sqlite3, time, datetime, os
 import readSensor
 
 #settings
 loggTime = 5 # nr of minutes between logging to db
-sensorLookUp = {"10 DE C6 35 1 8 0 86" : "outside", \
+sensorLookUp = {"10 DE C6 35 1 8 0 86" : "indoor", \
+		"10 87 35 36 1 8 0 5E" : "outdoor", \
 		"10 C4 EB 35 1 8 0 6" : "test"}
 
 def logging():
@@ -33,8 +34,8 @@ def logging():
 	for name in sensorReadings:
 		#date, time, value, sensor, name
 		c.execute("insert into sensors values(?, ?, ?, ?, ?)",\
-			 [date, time, sensorReadings[name][0], \
-			  sensorReadings[name][1], name])
+			 [date, time, sensorReadings[name][1], \
+			  sensorReadings[name][0], name])
 
 	conn.commit();
 	c.close()
@@ -50,6 +51,7 @@ def main():
 		if minutesToday % loggTime == 0 and lastLoged != minutesToday:
 			lastLoged = minutesToday
 			logging()
+			os.system("gnuplot temp.plot")
 		time.sleep(30) # sleep 30 seconds	
 			
 

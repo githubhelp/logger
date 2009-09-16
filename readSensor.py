@@ -3,11 +3,13 @@ import serial, re
 def readSensor():
 	ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600, timeout=3)
 	ser.open()
+	ser.flushInput() # flush old input before getting new
 	input = ser.readline()
 	try:
 		sensor = re.split(" Sensor: | ", input)[1]
 	except:
 		#print "Incorretly formated:", input
+		ser.close()
 		return readSensor()
 		
 	if sensor == "Temp":
@@ -30,4 +32,5 @@ def main():
 		print "Sensor:", sensor, "ID:", id, "Value:", value
 
 if __name__ == "__main__":
+	main()
 	main()
