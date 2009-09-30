@@ -53,7 +53,10 @@ def main():
 		if minutesToday % loggTime == 0 and lastLoged != minutesToday:
 			if logging():
 				lastLoged = minutesToday
-				os.system("gnuplot temp.plot")
+				os.system("gnuplot daily.plot")
+				os.system("gnuplot weekly.plot")
+				os.system("gnuplot monthly.plot")
+				os.system("gnuplot monthlyAVG.plot")
 		time.sleep(30) # sleep 30 seconds	
 			
 

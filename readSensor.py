@@ -1,23 +1,29 @@
 import serial, re
 
 def readSensor():
-	ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600, timeout=3)
-	ser.open()
-	ser.flushInput() # flush old input before getting new
-	input = ser.readline()
-	ser.close()
+	try:	
+		ser = serial.Serial(port="/dev/ttyUSB0",baudrate=9600,timeout=3)
+		ser.open()
+		ser.flushInput() # flush old input before getting new
+		input = ser.readline()
+		ser.close()
+	except:
+		print "opening and reading serial port failed"
+		ser.close()
+#	finally:
+#		ser.close()
 	try:
 		sensor = re.split(" Sensor: | ", input)[1]
 	except:
-		#print "Incorretly formated:", input
-		return readSensor()
+		print "Incorretly formated:", input
+		return False
 		
 	if sensor == "Temp":
 		try:
 			id=re.split("Sensor: | ID: | Temp: |C\r\n", input)[2]
 			value=re.split("Sensor: | ID: | Temp: |C\r\n", input)[3]
 		except:
-			return readSensor()
+			return False
 	elif sensor == "Error":
 		print input
 	else:
