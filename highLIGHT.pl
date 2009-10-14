@@ -15,7 +15,7 @@ my $highlighted = 0;
 
 sub highLIGHT 
 {
-	my ($dest) = @_;
+	my $dest = shift;
 	$highlighted = 1;
 	if ($dest->{level} & MSGLEVEL_HILIGHT)
 	{
@@ -43,5 +43,6 @@ sub priv_msg
 Irssi::signal_add_last("message private", "priv_msg");
 Irssi::signal_add_last("print text", "highLIGHT");
 Irssi::signal_add_last("window changed", "dehighLIGHT");
+Irssi::signal_add_last("send text", "dehighLIGHT");
 
 #- end

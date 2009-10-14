@@ -1,3 +1,4 @@
 #kill previus running instance(s)
 killall python sensorLogger.py 
-nohup python /home/simon/logger/sensorLogger.py &
+cd /home/simon/logger
+nohup python sensorLogger.py &
