@@ -9,6 +9,7 @@ set datafile separator "|"
 set style data lines
 set grid
 set yrange [0:*]
+set autoscale ymin
 set xdata time
 set timefmt x "%Y-%m-%d %H:%M"
 set format x "%m-%d"
