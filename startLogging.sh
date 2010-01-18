@@ -1,2 +1,3 @@
+killall sensorLogger.py
 cd /home/simon/logger
-nohup python sensorLogger.py &
+nohup ./sensorLogger.py &
