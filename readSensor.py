@@ -1,8 +1,9 @@
 import serial, re
+from writeLED import findPort
 
 def readSensor():
 	try:	
-		ser = serial.Serial(port="/dev/ttyUSB0",baudrate=9600,timeout=3)
+		ser = serial.Serial(findPort(),baudrate=9600,timeout=3)
 		ser.open()
 		ser.flushInput() # flush old input before getting new
 		input = ser.readline()
