@@ -52,13 +52,16 @@ def main():
 		timetuple = datetime.datetime.now().timetuple()
 		minutesToday = timetuple[3] * 60 + timetuple[4]
 		#if its time to logg and not allready logged	
-		if minutesToday % loggTime == 0 and lastLoged != minutesToday:
-			if logging():
-				lastLoged = minutesToday
-				os.system("gnuplot daily.plot")
-				os.system("gnuplot weekly.plot")
-				os.system("gnuplot monthly.plot")
-				os.system("gnuplot monthlyAVG.plot")
+		if lastLoged != minutesToday:
+			if minutesToday % loggTime == 0:
+				if logging():
+					lastLoged = minutesToday
+					os.system("gnuplot daily.plot")
+			if minutesToday % 60 == 0:	
+					os.system("gnuplot weekly.plot")
+			if minutesToday == 0:		
+					os.system("gnuplot monthly.plot")
+					os.system("gnuplot monthlyAVG.plot")
 		time.sleep(30) # sleep 30 seconds	
 			
 
