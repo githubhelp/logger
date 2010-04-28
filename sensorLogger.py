@@ -59,7 +59,7 @@ def main():
 					os.system("gnuplot daily.plot")
 			if minutesToday % 60 == 0:	
 					os.system("gnuplot weekly.plot")
-			if minutesToday == 0:		
+			if minutesToday % 300 == 0:		
 					os.system("gnuplot monthly.plot")
 					os.system("gnuplot monthlyAVG.plot")
 		time.sleep(30) # sleep 30 seconds	

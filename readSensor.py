@@ -1,8 +1,7 @@
 import serial, re
-
+ser=serial.Serial(port="/dev/arduino",baudrate=115200,timeout=3)
 def readSensor():
 	try:	
-		ser=serial.Serial(port="/dev/arduino",baudrate=115200,timeout=3)
 		ser.open()
 		ser.flushInput() # flush old input before getting new
 		input = ser.readline()
