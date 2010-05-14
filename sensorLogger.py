@@ -7,6 +7,7 @@ import readSensor
 loggTime = 5 # nr of minutes between logging to db
 sensorLookUp = {"10 DE C6 35 1 8 0 86" : "indoor", \
 		"10 87 35 36 1 8 0 5E" : "outdoor", \
+		"PIN0" : "flower1", \
 		"10 C4 EB 35 1 8 0 6" : "test"}
 
 def logging():
@@ -22,7 +23,8 @@ def logging():
 			return False # unsuccesfully logged
 
 		try:
-			#if sensor allready have been read then we read them all
+			#if sensor have allready have been read then we have 
+			#read them all
 			if sensorReadings.has_key(sensorLookUp[id]):
 				break
 

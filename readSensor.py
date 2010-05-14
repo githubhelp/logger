@@ -21,6 +21,12 @@ def readSensor():
 			value=re.split("Sensor: | ID: | Temp: |C\r\n", input)[3]
 		except:
 			return False
+	elif sensor == "Humidity":
+		try:
+			id=re.split("Sensor: | ID: | Value: |\r\n",input)[2]
+			value=re.split("Sensor: | ID: | Value: |\r\n",input)[3]
+		except:
+			return False
 	elif sensor == "Error":
 		print input
 	else:
