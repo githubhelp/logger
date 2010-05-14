@@ -9,8 +9,6 @@ def readSensor():
 	except:
 		print "opening and reading serial port failed"
 		ser.close()
-#	finally:
-#		ser.close()
 	try:
 		sensor = re.split(" Sensor: | ", input)[1]
 	except:
