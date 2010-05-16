@@ -17,3 +17,14 @@ Where ATTRS{interface} is the same as found with:
 sudo udevadm info -a -p /sys/class/tty/ttyUSB0 | grep interface
 
 Then replug the device and /dev/arduino should appear.
+
+
+HUGE Database:
+Over time the database will grow resulting in slower and slower sql queries
+therefore its good to sometime clean out old results, eg. only leaving one
+value per hour for values more than one month old eg with:
+select * from sensors where date < '2010-04-01' and time not like '__:00';
+
+then followed by:
+vacuum;
+to clean up unused space

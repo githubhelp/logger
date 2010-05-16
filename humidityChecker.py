@@ -77,17 +77,20 @@ def main():
 	while 1:
 		readings = check()
 		for name, value in readings.items():
-			if thresholdGuard[name][1] == -1:
-				dealarm(name, value)
-				thresholdGuard[name][1] = 0 #deactive alarm
-			elif thresholdGuard[name][0] > value:
+			if thresholdGuard[name][0] < value and \
+			    thresholdGuard[name][1] < 0:
+				thresholdGuard[name][1] -= 1
+				print name, value, "detrigged"
+			elif thresholdGuard[name][0] > value and \
+			     thresholdGuard[name][1] >= 0:
 				thresholdGuard[name][1] += 1
 				print name, value, "trigged"
-			else:
-				thresholdGuard[name][1] = 0	
 			if thresholdGuard[name][1] >= thresholdLimit:
 				alarm(name, value)
 				thresholdGuard[name][1] = -1 #active alarm
+			elif thresholdGuard[name][1] <= -thresholdLimit:
+				dealarm(name, value)
+				thresholdGuard[name][1] = 0 #deactive alarm
 			print ".",
 		time.sleep(30) # sleep 30 seconds	
 			
