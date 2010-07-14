@@ -1,0 +1,19 @@
+This application requirer that the arduino is programmed with
+this or compatible software:
+http://github.com/Norberg/sensors
+easily cloneable with:
+git clone git://github.com/Norberg/sensors.git
+
+This application prefers if it can find the arduino device at 
+/dev/arduino its possible to change port in readSensor.py to
+point to elsewhere but not recommended since it will differ
+depending on other device connected, instead write a udev rule
+that takes care of it.
+
+Create a new file in /etc/udev/rules.d called local.rules and put:
+SUBSYSTEMS=="usb",ATTRS{interface}=="FT232R USB UART",KERNEL=="ttyUSB*",SYMLINK+="arduino"
+
+Where ATTRS{interface} is the same as found with:
+sudo udevadm info -a -p /sys/class/tty/ttyUSB0 | grep interface
+
+Then replug the device and /dev/arduino should appear.

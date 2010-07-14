@@ -1,11 +1,7 @@
 import serial, sys, glob
 
-#returns first ttyUSB* port avalible
-def findPort():
-	return glob.glob("/dev/ttyUSB*")[0]
-
 def writeLED(led, status):
-	ser = serial.Serial(port=findPort(),baudrate=9600,timeout=3)
+	ser = serial.Serial(port="/dev/arduino",baudrate=115200,timeout=3)
 	if status == True:	
 		ser.write(led.upper()[0])
 	elif status == False:
@@ -14,7 +10,7 @@ def writeLED(led, status):
 	ser.close()
 
 def writeLED_PWM(led, level):
-	ser = serial.Serial(port=findPort(),baudrate=9600,timeout=3)
+	ser = serial.Serial(port="/dev/arduino",baudrate=115200,timeout=3)
 	ser.write(led.lower()[0])
 	ser.write(chr(level))
 	ser.close()
@@ -22,9 +18,9 @@ def writeLED_PWM(led, level):
 def main():
 	try:
 		if (sys.argv[2] == "on"):
-			writeLED(sys.argv[1], True)
+			writeLED_PWM(sys.argv[1], 5)
 		elif (sys.argv[2] == "off"):
-			writeLED(sys.argv[1], False)
+			writeLED_PWM(sys.argv[1], 0)
 		elif (sys.argv[2].isdigit()):
 			writeLED_PWM(sys.argv[1], int(sys.argv[2]))
 	except:
